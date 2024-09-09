@@ -43,18 +43,20 @@ const CreateBookmarkPage = () =>
 
     const handleAddTag = () =>
     {
-        if (tagsRef && tagsRef.current)
+        if (tagsRef && tagsRef.current && tagsRef.current.value !== '')
         {
             const result = tags.findIndex((value:string) => value === tagsRef.current!.value);
             if (result == -1) {
                 const copy = [...tags, tagsRef.current.value];
                 setTags(copy);
+                tagsRef.current.value = '';
             }
             else
             {
-                throw Error('Failed to add tag');
+                throw Error('Tag already exists');
             }
         }
+        else throw Error('Tag name cannot be empty');
 
     }
 
@@ -72,17 +74,17 @@ const CreateBookmarkPage = () =>
 
     return(
         <div className={'create-bookmark'}>
-            <input type={'url'} ref={urlRef}></input>
-            <input ref={nameRef}></input>
-            <input ref={tagsRef}></input>
+            <input type={'url'} ref={urlRef} placeholder={'URL'}></input>
+            <input type={'text'} ref={nameRef} placeholder={'Name'}></input>
+            <input type={'text'} ref={tagsRef} placeholder={'Tag'}></input>
             <button onClick={handleAddTag}>Add Tag</button>
             <div className={'tags-list'}>
                 {tags.map((value, index) =>{
                     return (
-                        <li key={index} className={'tag-element'}>
-                            {value}
+                        <div key={index} className={'tag-element'}>
+                            <div>{value}</div>
                             <button id={index.toString()} onClick={handleRemoveTag}>X</button>
-                        </li>);
+                        </div>);
                 })}
             </div>
             <button onClick={handleSubmit}>Add Bookmark</button>
