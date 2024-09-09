@@ -1,14 +1,15 @@
 import './App.css'
 import {useState} from 'react';
+import CreateBookmarkPage from "./Pages/CreateBookmark.tsx";
 
 
 
 function App() {
     const [message, setMessage] = useState('');
 
-    const handleClick = () =>
+    const handleGetBookmarks = () =>
     {
-        fetch('http://localhost:8080/hello', {
+        fetch('http://localhost:8080/bookmarks', {
             method: 'GET',
             mode: 'cors',
             headers : {
@@ -18,17 +19,17 @@ function App() {
         })
             .then(response => response.json())
             .then(data => {
-                setMessage(data.name)
+                setMessage(JSON.stringify(data))
             });
-
-
     }
+
 
     return (
         <>
             <div>
-                <button onClick={handleClick}>Change message</button>
+                <button onClick={handleGetBookmarks}>Get Bookmarks</button>
                 Current Message: {message}
+                <CreateBookmarkPage/>
             </div>
         </>
     )
