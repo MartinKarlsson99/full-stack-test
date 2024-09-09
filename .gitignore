@@ -23,3 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 /backend/HELP.md
+
+#Java things
+/backend/.gradle
+/backend/.idea
+/backend/build

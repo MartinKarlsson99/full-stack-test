@@ -2,16 +2,27 @@ package com.fullstack.bookmarkbackend.model;
 
 import java.util.ArrayList;
 
-public class BookMark {
+public class Bookmark {
+    private int id;
     private String url;
     private String name;
     private ArrayList<String> tags;
 
-    public BookMark(String url, String name, ArrayList<String> tags)
+    public Bookmark(int id, String url, String name, ArrayList<String> tags)
     {
+        this.id = id;
         this.url = url;
         this.name = name;
         this.tags = tags;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
     }
 
     public String getUrl() {
