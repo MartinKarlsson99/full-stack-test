@@ -1,11 +1,5 @@
 import {useState, useRef} from 'react'
-
-interface BookmarkProps {
-    id: number
-    url: string;
-    name: string;
-    tags: string[];
-}
+import {createBookmark} from "../HelperFunctions.tsx";
 
 const CreateBookmarkPage = () =>
 {
@@ -17,21 +11,7 @@ const CreateBookmarkPage = () =>
     const handleSubmit = () =>
     {
         if (urlRef.current && urlRef.current.value && nameRef.current && nameRef.current.value) {
-            fetch('http://localhost:8080/createbookmark', {
-                method: 'POST',
-                mode: 'cors',
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    'Allow-Credentials': '*',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    id: 1,
-                    url: urlRef.current.value,
-                    name: nameRef.current.value,
-                    tags: tags
-                })
-            }).then(res => {
+            createBookmark(urlRef.current.value, nameRef.current.value, tags).then(res => {
                 if (res.ok) {
                     urlRef.current!.value = '';
                     nameRef.current!.value = '';
@@ -39,6 +19,7 @@ const CreateBookmarkPage = () =>
                 }
             });
         }
+
     }
 
     const handleAddTag = () =>
@@ -60,7 +41,7 @@ const CreateBookmarkPage = () =>
 
     }
 
-    const handleRemoveTag = (e : any) =>
+    const handleRemoveTag = (e: any) =>
     {
         if (tagsRef && tagsRef.current) {
             const index = e.target.id;
