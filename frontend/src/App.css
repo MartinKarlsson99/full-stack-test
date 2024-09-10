@@ -41,6 +41,7 @@
   color: #888;
 }
 
+/* CREATE BOOKMARK PAGE*/
 .create-bookmark{
   display: flex;
   flex-direction: column;
@@ -84,5 +85,58 @@
   width: fit-content;
 }
 
+/*VIEW PAGE*/
+.view-page{
 
+}
+
+.url-card{
+  display: flex;
+  background-color: #f9f9f9;
+  margin: 10px;
+  width: fit-content;
+  height: fit-content;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: #1a1a1a 1px 3px 10px 0px;
+}
+
+.url-card-header{
+  display: flex;
+  flex-direction: row;
+  border-bottom: #1a1a1a solid 1px;
+  width: 100%;
+}
+
+.url-card-header button{
+  font-size: small;
+  border: #1a1a1a solid 1px;
+  margin-left: 10px;
+}
+
+.url-card div{
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.url-card-url{
+}
+
+.url-card-name{
+  font-weight: bold;
+  font-size: large;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.url-card-tag-list{
+  display: flex;
+  flex-direction: row;
+}
+
+.url-card-tag{
+  padding-right: 10px;
+  background: #cacaca;
+  border-radius: 10px;
+}
 
