@@ -20,8 +20,9 @@ const CreateBookmarkPage: React.FC<CreateBookmarkProps> = ({editMode}) =>
 
     useEffect(() => {
         if (params !== undefined && editMode) {
-            setBookmark(JSON.parse(params));
-            setTags(bookmark.tags);
+            const temp = JSON.parse(params);
+            setTags(temp.tags);
+            setBookmark(temp);
         }
     }, [params]);
 
@@ -72,6 +73,7 @@ const CreateBookmarkPage: React.FC<CreateBookmarkProps> = ({editMode}) =>
 
     const handleAddTag = () =>
     {
+        console.log(bookmark);
         if (tagsRef && tagsRef.current && tagsRef.current.value !== '')
         {
             const result = bookmark.tags.findIndex((value:string) => value === tagsRef.current!.value);
@@ -105,7 +107,7 @@ const CreateBookmarkPage: React.FC<CreateBookmarkProps> = ({editMode}) =>
         <div className={'create-bookmark'}>
             <input type={'url'} ref={urlRef} placeholder={'URL'} defaultValue={bookmark.url} onChange={handleChange}></input>
             <input type={'text'} ref={nameRef} placeholder={'Name'} defaultValue={bookmark.name} onChange={handleChange}></input>
-            <input type={'text'} ref={tagsRef} placeholder={'Tag'} onChange={handleChange}></input>
+            <input type={'text'} ref={tagsRef} placeholder={'Tag'}></input>
             <button onClick={handleAddTag}>Add Tag</button>
             <div className={'tags-list'}>
                 {bookmark.tags.map((value, index) =>{

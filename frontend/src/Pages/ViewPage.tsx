@@ -5,8 +5,7 @@ import { useNavigate } from "react-router-dom";
 import {Bookmark} from "../misc/misc.tsx";
 
 const ViewPage = () => {
-    const [bookmarks, setBookmarks] = useState([]);
-    const [editBookmark, setEditBookmark] = useState<Bookmark>();
+    const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
 
     const handleGetBookmarks = () => {
         getBookmarks()
@@ -35,14 +34,22 @@ const ViewPage = () => {
         navigate(path);
     }
 
-    const handleEdit = () =>
+    const getBookmarkById = (id: number): Bookmark | undefined =>{
+        const result = bookmarks.find((bookmark) => bookmark.id === id);
+        if (result) return result;
+        return undefined;
+    }
+
+    const handleEdit = (e: any) =>
     {
-        if (editBookmark) {
+        const target = getBookmarkById(parseInt(e.target.id));
+        console.log(target);
+        if (target !== undefined) {
             const path = '/editbookmark/' + JSON.stringify({
-                id: editBookmark.id,
-                url: editBookmark.url,
-                name: editBookmark.name,
-                tags: editBookmark.tags
+                id: target.id,
+                url: target.url,
+                name: target.name,
+                tags: target.tags
             });
             navigate(path);
         }
@@ -51,12 +58,10 @@ const ViewPage = () => {
     return(
         <div className={'view-page'}>
             {bookmarks.map((value, index) => {
-                console.log(value);
                 return (
                         <UrlRecord
                             key={index}
                             handleEdit={handleEdit}
-                            setBookmark={setEditBookmark}
                             handleRemove={handleRemove}
                             bookmark={{
                                 id:value.id,
