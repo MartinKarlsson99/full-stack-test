@@ -63,19 +63,19 @@ export async function deleteBookmark(id: number)
     })
 }
 
-export function filterBookmarksByTags(bookmarks: Bookmark[], tags : string[]): Bookmark[]
-{
-    let temp : Bookmark[] = [];
-    for (const bookmark of bookmarks)
-    {
-        for (const tag of tags)
-        {
-            if (temp.indexOf(bookmark) <= -1 && bookmark.tags.indexOf(tag) > -1)
-            {
+export function filterBookmarksByTags(bookmarks: Bookmark[], tags: string[]): Bookmark[] {
+    let temp: Bookmark[] = [];
+
+    for (const bookmark of bookmarks) {
+        for (const tag of tags) {
+            const regex = new RegExp(`\\b${tag}`, 'i');
+
+            if (temp.indexOf(bookmark) === -1 && bookmark.tags.some(bTag => regex.test(bTag))) {
                 temp.push(bookmark);
             }
         }
     }
     return temp;
 }
+
 

@@ -90,7 +90,7 @@ const ViewPage = () => {
 
     return(
         <div className={'view-page'}>
-            <input onChange={handleFilter}></input>
+            <input onChange={handleFilter} placeholder={'Search for tag'}></input>
             {filteredBookmarks.map((value, index) => {
                 return (
                         <UrlRecord
