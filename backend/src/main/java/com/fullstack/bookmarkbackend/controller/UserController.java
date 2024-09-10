@@ -2,7 +2,6 @@ package com.fullstack.bookmarkbackend.controller;
 
 import com.fullstack.bookmarkbackend.model.Bookmark;
 import com.fullstack.bookmarkbackend.service.UserService;
-import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,11 +50,18 @@ public class UserController {
         }
     }
 
-    @DeleteMapping
-    public ResponseEntity<Bookmark> deleteBookmark(@RequestBody Bookmark bookmark)
+    @DeleteMapping("/deletebookmark")
+    public ResponseEntity<Boolean> deleteBookmark(@RequestBody Bookmark bookmark)
     {
-        Bookmark deletedBookmark = userService.deleteBookmark(bookmark);
-        return new ResponseEntity<>(deletedBookmark, HttpStatus.NO_CONTENT);
+        boolean success = userService.deleteBookmark(bookmark);
+        return new ResponseEntity<>(success, HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("/edit")
+    public ResponseEntity<Boolean> editBookmark(@RequestBody Bookmark bookmark)
+    {
+        boolean success = userService.updateBookmark(bookmark);
+        return new ResponseEntity<>(success, HttpStatus.NO_CONTENT);
     }
 
 }

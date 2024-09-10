@@ -44,13 +44,8 @@ public class Session {
         return bookmark;
     }
 
-    public Bookmark removeBookmark(Bookmark bookmark) {
-        boolean success = bookmarks.remove(bookmark);
-        if (success)
-        {
-            return bookmark;
-        }
-        return null;
+    public boolean removeBookmark(int id) {
+        return bookmarks.removeIf(bookmark -> bookmark.getId() == id);
     }
 
 

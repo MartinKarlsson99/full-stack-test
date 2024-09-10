@@ -43,14 +43,18 @@ public class UserService {
         return null;
     }
 
-    public void updateBookmark(Bookmark alteredBookmark)
+    public boolean updateBookmark(Bookmark alteredBookmark)
     {
         ArrayList<Bookmark> bookmarks = getUserBookmarks();
         Bookmark oldBookmark = getBookmarkById(alteredBookmark.getId());
 
-        bookmarks.remove(oldBookmark);
-        bookmarks.add(alteredBookmark);
-        session.setBookmarks(bookmarks);
+        boolean success = bookmarks.remove(oldBookmark);
+        if (success) {
+            bookmarks.add(alteredBookmark);
+            session.setBookmarks(bookmarks);
+            return true;
+        }
+        return false;
     }
 
     public Bookmark createBookmark(int id, String url, String name, ArrayList<String> tags)
@@ -58,9 +62,9 @@ public class UserService {
         return new Bookmark(id, url, name, tags);
     }
 
-    public Bookmark deleteBookmark(Bookmark bookmark)
+    public boolean deleteBookmark(Bookmark bookmark)
     {
-        return session.removeBookmark(bookmark);
+        return session.removeBookmark(bookmark.getId());
     }
 
 }
