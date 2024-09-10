@@ -2,6 +2,8 @@ package com.fullstack.bookmarkbackend.service;
 
 import com.fullstack.bookmarkbackend.model.Bookmark;
 import com.fullstack.bookmarkbackend.model.Session;
+import com.fullstack.bookmarkbackend.repository.JsonReader;
+import com.fullstack.bookmarkbackend.repository.JsonWriter;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,7 +20,7 @@ public class UserService {
 
     public UserService()
     {
-        this.session = new Session();
+        loadSession();
     }
 
     public ArrayList<Bookmark> getUserBookmarks()
@@ -65,6 +67,16 @@ public class UserService {
     public boolean deleteBookmark(Bookmark bookmark)
     {
         return session.removeBookmark(bookmark.getId());
+    }
+
+    public void saveSession()
+    {
+        JsonWriter.writeObjectToJsonFile(this.session, "session.json");
+    }
+
+    public void loadSession()
+    {
+        this.session = JsonReader.readObjectFromJsonFile("session.json", Session.class);
     }
 
 }

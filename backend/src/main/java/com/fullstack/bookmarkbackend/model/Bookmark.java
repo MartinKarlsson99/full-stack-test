@@ -16,6 +16,14 @@ public class Bookmark {
         this.tags = tags;
     }
 
+    public Bookmark()
+    {
+        this.id = 0;
+        this.url = "";
+        this.name = "";
+        this.tags = new ArrayList<>();
+    }
+
     public int getId() {
         return id;
     }

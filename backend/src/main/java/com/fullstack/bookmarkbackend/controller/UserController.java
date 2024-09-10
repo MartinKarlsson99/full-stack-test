@@ -42,6 +42,7 @@ public class UserController {
         Bookmark addedBookmark = userService.addBookmark(bookmark);
         if (addedBookmark != null)
         {
+            userService.saveSession();
             return new ResponseEntity<>(addedBookmark, HttpStatus.CREATED);
         }
         else
@@ -54,6 +55,7 @@ public class UserController {
     public ResponseEntity<Boolean> deleteBookmark(@RequestBody Bookmark bookmark)
     {
         boolean success = userService.deleteBookmark(bookmark);
+        userService.saveSession();
         return new ResponseEntity<>(success, HttpStatus.NO_CONTENT);
     }
 
@@ -61,6 +63,7 @@ public class UserController {
     public ResponseEntity<Boolean> editBookmark(@RequestBody Bookmark bookmark)
     {
         boolean success = userService.updateBookmark(bookmark);
+        userService.saveSession();
         return new ResponseEntity<>(success, HttpStatus.NO_CONTENT);
     }
 
