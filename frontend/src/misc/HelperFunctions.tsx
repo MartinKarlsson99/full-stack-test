@@ -20,7 +20,7 @@ export async function createBookmark(bookmark: Bookmark) {
 
 export async function editBookmark(bookmark: Bookmark)
 {
-    return await fetch('http://localhost:8080/editbookmark', {
+    return await fetch('http://localhost:8080/edit', {
         method: 'PUT',
         mode: 'cors',
         headers:{
@@ -61,5 +61,21 @@ export async function deleteBookmark(id: number)
             tags: []
         })
     })
+}
+
+export function filterBookmarksByTags(bookmarks: Bookmark[], tags : string[]): Bookmark[]
+{
+    let temp : Bookmark[] = [];
+    for (const bookmark of bookmarks)
+    {
+        for (const tag of tags)
+        {
+            if (temp.indexOf(bookmark) <= -1 && bookmark.tags.indexOf(tag) > -1)
+            {
+                temp.push(bookmark);
+            }
+        }
+    }
+    return temp;
 }
 

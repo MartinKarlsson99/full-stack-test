@@ -1,11 +1,12 @@
 import {SyntheticEvent, useEffect, useState} from "react";
 import UrlRecord from "../Components/UrlRecord.tsx";
-import {deleteBookmark, getBookmarks} from "../misc/HelperFunctions.tsx";
+import {deleteBookmark, filterBookmarksByTags, getBookmarks} from "../misc/HelperFunctions.tsx";
 import { useNavigate } from "react-router-dom";
 import {Bookmark} from "../misc/misc.tsx";
 
 const ViewPage = () => {
     const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
+    const [filteredBookmarks, setFilteredBookmarks] = useState<Bookmark[]>([]);
 
     const handleGetBookmarks = () => {
         getBookmarks()
@@ -13,6 +14,7 @@ const ViewPage = () => {
             .then(data => {
                 console.log('data:', data);
                 setBookmarks(data)
+                setFilteredBookmarks(data);
             });
     }
 
@@ -55,9 +57,36 @@ const ViewPage = () => {
         }
     }
 
+    const handleFilter = (e: any) =>
+    {
+        const value = e.target.value;
+        if (value === '')
+        {
+            setFilteredBookmarks(bookmarks);
+        }
+        else
+        {
+            const res = filterBookmarksByTags(bookmarks, [value]);
+            setFilteredBookmarks(res);
+        }
+    }
+
+    const getAllTags = () =>
+    {
+        const tags : string[] = []
+        for (const bookmark of bookmarks)
+        {
+            for (const tag in bookmark.tags)
+            {
+
+            }
+        }
+    }
+
     return(
         <div className={'view-page'}>
-            {bookmarks.map((value, index) => {
+            <input onChange={handleFilter}></input>
+            {filteredBookmarks.map((value, index) => {
                 return (
                         <UrlRecord
                             key={index}
@@ -72,7 +101,6 @@ const ViewPage = () => {
                 }
             )}
             <button onClick={handleCreate}>Create New Bookmark</button>
-            <button onClick={handleEdit}>Edit Bookmark</button>
         </div>
     );
 
