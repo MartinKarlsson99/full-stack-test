@@ -1,18 +1,12 @@
 import {useEffect, useState} from "react";
 import UrlRecord from "../Components/UrlRecord.tsx";
+import {getBookmarks} from "../HelperFunctions.tsx";
 
 const ViewPage = () => {
     const [bookmarks, setBookmarks] = useState([]);
 
-    const getBookmarks = () => {
-        fetch('http://localhost:8080/bookmarks', {
-            method: 'GET',
-            mode: 'cors',
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Allow-Credentials': '*'
-            }
-        })
+    const handleGetBookmarks = () => {
+        getBookmarks()
             .then(response => response.json())
             .then(data => {
                 setBookmarks(data)
@@ -20,7 +14,7 @@ const ViewPage = () => {
     }
 
     useEffect(() => {
-        getBookmarks();
+        handleGetBookmarks();
     }, [])
 
     const handleRemove = () =>
