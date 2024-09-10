@@ -1,5 +1,6 @@
 import * as React from "react";
 import {Bookmark} from "../misc/misc.tsx";
+import {useEffect, useState} from "react";
 
 interface UrlRecordProps{
     bookmark: Bookmark;
@@ -12,8 +13,20 @@ const UrlRecord: React.FC<UrlRecordProps> = ({bookmark, handleRemove, handleEdit
 
     const id = bookmark.id;
     const name = bookmark.name;
-    const url = bookmark.url;
+    const [url, setUrl] = useState(bookmark.url);
     const tags = bookmark.tags
+
+    const ensureUrlCorrectness = () =>
+    {
+        if (!(url.includes('http://') || url.includes('https://')))
+        {
+            setUrl("https://" + url);
+        }
+    }
+
+    useEffect(() => {
+        ensureUrlCorrectness();
+    });
 
     return(
         <div key={id} className={'url-card'}>
