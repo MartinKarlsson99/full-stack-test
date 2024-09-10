@@ -22,7 +22,7 @@ const UrlRecord: React.FC<UrlRecordProps> = ({bookmark, handleRemove, handleEdit
                 <button id={id.toString()} onClick={handleEdit}>Edit</button>
                 <button id={id.toString()} onClick={handleRemove}>X</button>
             </div>
-            <div className={'url-card-url'}>{url}</div>
+            <a className={'url-card-url'} href={url} target={'_blank'} rel="noopener noreferrer">{url}</a>
             <div className={'url-card-tag-list'}>
                 {tags.map((value: string, index: number) => {
                     return <div className={'url-card-tag'} key={index}>{value}</div>

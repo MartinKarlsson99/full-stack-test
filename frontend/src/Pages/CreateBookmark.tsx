@@ -92,6 +92,14 @@ const CreateBookmarkPage: React.FC<CreateBookmarkProps> = ({editMode}) =>
 
     }
 
+    const handleKeyDown = (e : any) =>
+    {
+        if (e.keyCode == 13)
+        {
+            handleAddTag();
+        }
+    }
+
     const handleRemoveTag = (e: any) =>
     {
         if (tagsRef && tagsRef.current) {
@@ -107,7 +115,7 @@ const CreateBookmarkPage: React.FC<CreateBookmarkProps> = ({editMode}) =>
         <div className={'create-bookmark'}>
             <input type={'url'} ref={urlRef} placeholder={'URL'} defaultValue={bookmark.url} onChange={handleChange}></input>
             <input type={'text'} ref={nameRef} placeholder={'Name'} defaultValue={bookmark.name} onChange={handleChange}></input>
-            <input type={'text'} ref={tagsRef} placeholder={'Tag'}></input>
+            <input type={'text'} ref={tagsRef} placeholder={'Tag'} onKeyDown={handleKeyDown}></input>
             <button onClick={handleAddTag}>Add Tag</button>
             <div className={'tags-list'}>
                 {bookmark.tags.map((value, index) =>{

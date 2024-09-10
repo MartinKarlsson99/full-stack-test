@@ -22,11 +22,28 @@ const ViewPage = () => {
         handleGetBookmarks();
     }, [])
 
+    useEffect(() => {
+        setFilteredBookmarks(bookmarks);
+    }, [bookmarks]);
+
     const handleRemove = (e : SyntheticEvent) =>
     {
         const element = e.target as HTMLElement;
-        console.log(element.id);
-        deleteBookmark(parseInt(element.id)).then(r => console.log(r));
+        const elementId = parseInt(element.id);
+        deleteBookmark(elementId).then(r => {
+            console.log(r)
+            if (r.ok)
+            {
+                console.log("DELETING");
+                const index = bookmarks.findIndex((value) =>{
+                   return value.id === elementId;
+                });
+                const copy = [...bookmarks];
+                copy.splice(index, 1);
+                console.log(copy);
+                setBookmarks(copy);
+            }
+        });
     }
 
     const navigate = useNavigate();
@@ -68,18 +85,6 @@ const ViewPage = () => {
         {
             const res = filterBookmarksByTags(bookmarks, [value]);
             setFilteredBookmarks(res);
-        }
-    }
-
-    const getAllTags = () =>
-    {
-        const tags : string[] = []
-        for (const bookmark of bookmarks)
-        {
-            for (const tag in bookmark.tags)
-            {
-
-            }
         }
     }
 
