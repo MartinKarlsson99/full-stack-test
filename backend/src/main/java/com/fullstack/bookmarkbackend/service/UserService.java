@@ -21,6 +21,10 @@ public class UserService {
     public UserService()
     {
         loadSession();
+        if (session == null)
+        {
+            session = new Session();
+        }
     }
 
     public ArrayList<Bookmark> getUserBookmarks()
